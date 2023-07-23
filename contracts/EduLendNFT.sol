@@ -61,8 +61,8 @@ contract MySoulToken is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Burnab
         token2courseInfo[tokenId] = CourseInfo(courseInd, _deadline, Status.Ongoing);
     }
 
-    function updateStatus(uint256 _tokenId, Status status ) public onlyAdmin{
-        token2courseInfo[_tokenId].status = status;
+    function setCompleted(uint256 _tokenId ) public onlyAdmin{
+        token2courseInfo[_tokenId].status = Status.Completed;
     }
 
     // The following functions are overrides required by Solidity.
