@@ -7,14 +7,12 @@ import Web3 from "web3";
 import { ethers } from 'ethers';
 import { signIn, signOut, useSession } from "next-auth/react"
 
-import bobAbi from './bobAbi.json'
-import depositQueueAbi from './depositQueueAbi.json'
+import erc20Abi from './erc20Abi.json'
 
 // Network Sepolia:
 // zkbob_sepolia:2r3UhH5Dw7rumEPfAacov3PPTsn5j7kF8TywUkpXjE42S7T3fLd5ZXGoSre4WF9
-const toZkAddress = "2r3UhH5Dw7rumEPfAacov3PPTsn5j7kF8TywUkpXjE42S7T3fLd5ZXGoSre4WF9"
-const bob = "0x2C74B18e2f84B78ac67428d0c7a9898515f0c46f"
-const depositQueueAddr = "0xE3Dd183ffa70BcFC442A0B9991E682cA8A442Ade"
+const toAddress = "0x00D8F074D2041D3d897AB2B5268d09479FA9Bf6a"
+const erc20 = "0x2C74B18e2f84B78ac67428d0c7a9898515f0c46f"
 
 
 export default function Page() {
@@ -25,9 +23,6 @@ export default function Page() {
     const [withdraw_secret,setWithdraw_secret] = useState('');
     const [hashArray,setHashArray] = useState([])
     const [to_address,setTo_address] = useState('');
-    const toZkAddress = "2r3UhH5Dw7rumEPfAacov3PPTsn5j7kF8TywUkpXjE42S7T3fLd5ZXGoSre4WF9"
-    const bob = "0x2C74B18e2f84B78ac67428d0c7a9898515f0c46f"
-    const depositQueueAddr = "0xE3Dd183ffa70BcFC442A0B9991E682cA8A442Ade"
 
     async function ApproveAndDepositBob() {
         addhash();
@@ -35,19 +30,12 @@ export default function Page() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         
-        // Approve Bob
-        const BOB20 = new ethers.Contract(bob, bobAbi, signer);
+        // Transfer Bob
+        const ERC20 = new ethers.Contract(erc20, erc20Abi, signer);
         console.log("amount: ", amount);
-        let tx = await BOB20.connect(signer).approve(depositQueueAddr, amount);
+        let tx = await ERC20.connect(signer).transfer(toAddress, amount);
         console.log(`Tx: https://sepolia.etherscan.io/tx/${tx.hash}`);
         let receipt = await tx.wait();
-
-        //Submit to deposit queue
-        const depositQueue = new ethers.Contract(depositQueueAddr, depositQueueAbi, signer);
-        tx = await depositQueue.connect(signer)["directDeposit(address,uint256,string)"](signer.getAddress(), amount, toZkAddress.toString());
-        console.log(`Tx: https://sepolia.etherscan.io/tx/${tx.hash}`);
-        receipt = await tx.wait();
-
 
     }
 
@@ -73,13 +61,13 @@ export default function Page() {
     }
 
     return (
-        <InnerPageContainer title="Anonymous Lending">
-            <label>Amount to Contribute (in BoB): </label> <br/><br/>
+        <InnerPageContainer title="Transparent Lending">
+            <label>Amount to Contribute (in USDC): </label> <br/><br/>
                 <input value={amount} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setAmount(e.target.value)} placeholder="input amount in wei"  id="bobAmt" size="147" defaultValue={'1'}/>
                 <input value={secret} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setSceret(e.target.value)} placeholder= "secret which should be provided at the time of withdraw for computation" id="secret" size="147" defaultValue={'1'}/>
-            <button className="btn btn-primary" onClick={ApproveAndDepositBob}>Deposit Bob (MetaMask)</button> 
+            <button className="btn btn-primary" onClick={ApproveAndDepositBob}>Deposit USDC (MetaMask)</button> 
             <br/><br/><br/> d
-            <label>Amount to withdraw (in BoB): </label> <br/><br/>
+            <label>Amount to withdraw (in USDC): </label> <br/><br/>
                 <input value={withdraw_amount} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setWithdraw_amount(e.target.value)} placeholder="input amount in wei"  id="bobAmt" size="147" defaultValue={'1'}/>
                 <input value={withdraw_secret} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setWithdraw_secret(e.target.value)} placeholder= "secret" id="secret" size="147" defaultValue={'1'}/>
                 <input value={to_address} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setTo_address(e.target.value)} placeholder= "To Address" id="To Address" size="147" defaultValue={'1'}/>

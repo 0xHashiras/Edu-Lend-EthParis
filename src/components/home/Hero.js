@@ -8,7 +8,7 @@ function Hero(){
                 <div>
                 <h1 className="text-5xl font-bold">Bridging the gap of entry barriers for our young warriors</h1>
                 <p className="py-6">It is platform where Samaritans of the world could contribute anonymously or non-anonymously to the students of the world who are currently facing a entry barrier for participating in the Hackathons or taking up educational bootcamps/courses .</p>
-                <Link href='/anon-lender'>
+                <Link href='/lender-login-type'>
                 <button className="btn btn-primary">Samaritan</button>
                 </Link>                
 
