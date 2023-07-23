@@ -95,7 +95,7 @@ function Navbar(){
 
 
     return(
-        <div className="w-full flex justify-center  shadow-md  text-primary-content bg-primary">
+        <div className="w-full flex justify-center  shadow-md  text-primary-content bg-green-500">
         <div className="navbar  max-w-5xl">
         <div className="flex-none lg:hidden">
             <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
@@ -117,11 +117,11 @@ function Navbar(){
           </ul>
 
         
-          <label className="swap ">
+          {/* <label className="swap ">
                 <input type="checkbox"/>
                 <SunIcon data-set-theme="light" data-act-class="ACTIVECLASS" className={"fill-current w-5 h-5 "+(currentTheme === "dark" ? "swap-on" : "swap-off")}/>
                 <MoonIcon data-set-theme="dark" data-act-class="ACTIVECLASS" className={"fill-current w-5 h-5 "+(currentTheme === "light" ? "swap-on" : "swap-off")} />
-            </label>
+            </label> */}
 
             {address ? <div className="dropdown ml-6 dropdown-end arrow">
                  {/* <label tabIndex={0} className="btn btn-ghost btn-circle avatar"> */}

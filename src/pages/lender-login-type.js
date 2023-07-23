@@ -13,10 +13,10 @@ export default function Page() {
             <div className="hero-content max-w-5xl flex-col lg:flex-row-reverse">
 
               <Link href='/anon-lender'>
-                <button className="btn btn-primary">Anon</button>
+                <button className="btn bg-green-500">Anon</button>
              </Link>
               <Link href='/normal-lender'>
-                 <button className="btn btn-primary">
+                 <button className="btn bg-green-500">
                     Public
                  </button>
                  </Link>

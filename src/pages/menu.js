@@ -212,9 +212,7 @@ export default function Page() {
         created_at: created_at
       })
       console.log("Proof ", val)
-      toast('Account verified Successfully', {type: 'success'})
     } catch (error) {
-      toast('Account verified Successfully', {type: 'success'})
       console.error(error)
     }
 
@@ -242,14 +240,24 @@ export default function Page() {
   
 
   return (
-    <InnerPageContainer title="Verify with Next.ID">
+    <InnerPageContainer title="Borrower Menu">
       {/* <h2>
             Verify with (Next.Id)
             </h2> */}
-      <button className="btn bg-green-500" onClick={() => setOption('twitter')}>Twitter</button> OR
-      <button className="btn bg-green-500" onClick={() => setOption('github')}>Github</button> <br />
+      {/* <button className="btn bg-green-500" onClick={() => setOption('twitter')}>Twitter</button> OR
+      <button className="btn bg-green-500" onClick={() => setOption('github')}>Github</button> <br /> */}
 
-      
+        <Link href={'verify'}>
+        <button className="btn bg-green-500 mt-8" >Verify</button>
+        </Link> <br />
+      <button className="btn bg-green-500 mt-8" onClick={() => {
+        setOption('ma')}}>Make Attestation</button> <br />
+        <Link href={'acknowledgement'}>
+        <button className="btn bg-green-500 mt-8" >Make Acknowledgement</button>
+        </Link> <br />
+        <Link href={'submissions'}>
+        <button className="btn bg-green-500 mt-8" >My Submissions</button>
+        </Link> <br />
         {option === 'ma' && <> <form onSubmit={makeEas}>
         <label htmlFor="course" className="block  text-sm font-medium dark:text-white">Course</label>
         <input type="text" id="course" value={attestationData.course_name} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter course name" required onChange={(e) => setAttestationData({...attestationData, course_name: e.target.value})} />
@@ -263,55 +271,14 @@ export default function Page() {
         <input type="text" id="twitter" value={attestationData.twitter} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter twitter handler" required onChange={(e) => setAttestationData({...attestationData, twitter: e.target.value})} />
         <label htmlFor="github" className="block  text-sm font-medium dark:text-white">Github</label>
         <input type="text" id="github" value={attestationData.github} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter github handler" required onChange={(e) => setAttestationData({...attestationData, github: e.target.value})} />
-        <button className="btn bg-green-500 mt-8" type="submit">Submit Assetation</button>
+        <button className="btn bg-green-500 mt-8" type="submit">Submit Attestation</button>
           </form>
 
           <label htmlFor="Search Id" className="block mt-8 text-sm font-medium dark:text-white">Search Attestations</label>
         <input type="text" id="search" value={search} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter github handler" required onChange={(e) => setSearch(e.target.value)} />
-        <button className="btn bg-green-500 mt-8" type="button" onClick={getConfirmationAttestationsForUIDs}>Search Assetation</button>
+        <button className="btn bg-green-500 mt-8" type="button" onClick={getConfirmationAttestationsForUIDs}>Search Attestation</button>
           </>
           }
-      <form onSubmit={verify}>
-        {option === 'twitter' ? <div>
-          <label htmlFor="twitter" className="block  text-sm font-medium dark:text-white">Twitter Handler (without @)</label>
-          <input type="text" id="twitter" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter twitter handler" required onChange={(e) => setHandler(e.target.value)} />
-          <label htmlFor="Public_key" className="block  text-sm font-medium dark:text-white">Public Key(Different from address) (without @)</label>
-          <input type="text" id="Public_key" value={public_key} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter public key" required onChange={(e) => setPublic_key(e.target.value)} />
-          <button className="btn bg-green-500 mt-8" onClick={getPublickey} style={{ marginRight: '5px' }}>get Key</button>
-          <button className="btn bg-green-500 mt-8" type="submit">Submit</button>
-        </div> :
-          option === 'github' ? <div>
-            <label htmlFor="github" className="block mb-2 text-sm font-medium dark:text-white">Github Handler</label>
-            <input type="text" id="github" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter github handler" required onChange={(e) => setHandler(e.target.value)} />
-            <label htmlFor="Public_key" className="block  text-sm font-medium dark:text-white">Public Key(Different from address) (without @)</label>
-            <input type="text" id="Public_key" value={public_key} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter public key" required onChange={(e) => setPublic_key(e.target.value)} />
-            <button className="btn bg-green-500 mt-8" onClick={getPublickey} style={{ marginRight: '5px' }}>get Key</button>
-            <button className="btn bg-green-500 mt-8" type="submit">Submit</button> </div> : <></>
-        }
-      </form>
-      { payload != "" && (
-        <div>
-          {/* Content for the first div when showDiv is true */}
-          <label htmlFor="Payload" className="block  text-sm font-medium dark:text-black">Payload = {payload} (without @)</label>
-          <button className="btn bg-green-500 mt-8" onClick={sign_payload} style={{ marginRight: '5px' }}> Sign payload</button>
-        </div>
-      ) }
-      { final_content != ""  &&
-      (
-        <div>
-          {/* Content for the first div when showDiv is true */}
-          <label htmlFor="Twitter postcontent" className="block  text-sm font-medium dark:text-black"> Post this on twitter = {final_content} </label>
-          <button className="btn bg-green-500 mt-8" onClick={changeStatusIDbool} style={{ marginRight: '5px' }}> Post on twitter</button>
-        </div>
-      ) }
-      {
-        showStatusInput && (
-          <div>
-          <label htmlFor="status id input " className="block  text-sm font-medium dark:text-black"> Enter twitter post status ID (without @)</label> 
-          <input type="text" id="statusID" value={statusID} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="status ID" required onChange={(e) => setStatusID(e.target.value)} />
-          <button className="btn bg-green-500 mt-8" onClick={verifypost} style={{ marginRight: '5px' }}> Verify account</button>
-        </div>
-      )}
     </InnerPageContainer>
   )
 }

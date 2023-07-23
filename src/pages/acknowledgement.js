@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import Link from "next/link"
 import { EAS, Offchain, SchemaEncoder, SchemaRegistry } from  "@ethereum-attestation-service/eas-sdk";
 import { useState } from "react";
+import { toast } from "../hooks/alert"
 
 const EASContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e"; // Sepolia v0.26
 
@@ -46,10 +47,12 @@ export default function Acknowledgement(){
           },
         });
         const newAttestationUID = await tx.wait();
-    
+        
         console.log("New attestation UID:", newAttestationUID);
+        toast(newAttestationUID, {type: 'success'})
     
         } catch (error) {
+        toast(error.message, {type: 'error'})
           console.log(error)
         }
       }
@@ -60,9 +63,9 @@ export default function Acknowledgement(){
                 <img src="/ack.jpeg" className="max-w-sm rounded-lg shadow-2xl" />
                 <div>
                 <h1 className="text-5xl font-bold">Acknowledgement</h1>
-                <p className="py-6">It is platform where Samaritans of the world could contribute anonymously or non-anonymously to the students of the world who are currently facing a entry barrier for participating in the Hackathons or taking up educational bootcamps/courses .</p>
+                <p className="py-6">I hereby acknowledge that i will complete the course and make full use of the opportunity .</p>
         <input type="text" id="course" value={declare} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter name to declare (optional)" onChange={(e) => setDeclare(e.target.value)} />
-                <button className="btn btn-primary mt-8" onClick={makeEas}>Acknowledgement</button>
+                <button className="btn bg-green-500 mt-8" onClick={makeEas}>Acknowledgement</button>
                 </div>
             </div>
         </div>

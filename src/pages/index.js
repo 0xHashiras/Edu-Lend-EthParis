@@ -4,15 +4,23 @@ import styles from '@/styles/Home.module.css'
 import Hero from '@/components/home/Hero'
 import Features from '@/components/home/Features'
 import Testimonials from '@/components/home/Testimonials'
+import { useEffect } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  useEffect(() => {
+      // initStripe()
+  }, [])
+
+  
+
   return (
     <>
         <Hero />
-        <Features />
-        <Testimonials />
+        {/* <Features />
+        <Testimonials /> */}
     </>
   )
 }

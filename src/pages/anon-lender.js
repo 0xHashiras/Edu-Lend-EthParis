@@ -1,7 +1,7 @@
 import InnerPageContainer from "@/components/common/InnerPageContainer";
 import axios from "axios";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Web3 from "web3";
 import { ethers } from 'ethers';
@@ -9,7 +9,6 @@ import { signIn, signOut, useSession } from "next-auth/react"
 
 import bobAbi from './bobAbi.json'
 import depositQueueAbi from './depositQueueAbi.json'
-
 // Network Sepolia:
 // zkbob_sepolia:2r3UhH5Dw7rumEPfAacov3PPTsn5j7kF8TywUkpXjE42S7T3fLd5ZXGoSre4WF9
 const toZkAddress = "2r3UhH5Dw7rumEPfAacov3PPTsn5j7kF8TywUkpXjE42S7T3fLd5ZXGoSre4WF9"
@@ -77,13 +76,13 @@ export default function Page() {
             <label>Amount to Contribute (in BoB): </label> <br/><br/>
                 <input value={amount} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setAmount(e.target.value)} placeholder="input amount in wei"  id="bobAmt" size="147" defaultValue={'1'}/>
                 <input value={secret} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setSceret(e.target.value)} placeholder= "secret which should be provided at the time of withdraw for computation" id="secret" size="147" defaultValue={'1'}/>
-            <button className="btn btn-primary" onClick={ApproveAndDepositBob}>Deposit Bob (MetaMask)</button> 
+            <button className="btn bg-green-500" onClick={ApproveAndDepositBob}>Deposit Bob (MetaMask)</button> 
             <br/><br/><br/> d
             <label>Amount to withdraw (in BoB): </label> <br/><br/>
                 <input value={withdraw_amount} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setWithdraw_amount(e.target.value)} placeholder="input amount in wei"  id="bobAmt" size="147" defaultValue={'1'}/>
                 <input value={withdraw_secret} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setWithdraw_secret(e.target.value)} placeholder= "secret" id="secret" size="147" defaultValue={'1'}/>
                 <input value={to_address} type="text" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onChange={(e) => setTo_address(e.target.value)} placeholder= "To Address" id="To Address" size="147" defaultValue={'1'}/>
-                <button className="btn btn-primary" onClick={removehash} > sumbit withdraw request </button>
+                <button className="btn bg-green-500" onClick={removehash} > sumbit withdraw request </button>
             <br/><br/><br/>
             
         </InnerPageContainer>

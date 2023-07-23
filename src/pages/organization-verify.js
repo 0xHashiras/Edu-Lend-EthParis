@@ -7,6 +7,7 @@ import { ethers } from 'ethers';
 import { ecsign, toRpcSig, keccakFromString, BN, ecrecover } from 'ethereumjs-util';
 import { EAS, Offchain, SchemaEncoder, SchemaRegistry } from  "@ethereum-attestation-service/eas-sdk";
 import Link from "next/link";
+import { toast } from "@/hooks/alert";
 // const ethers  = require( 'ethers');
 // const RPC_URL = "https://sepolia.infura.io/v3/91b015d3797b46078af8be3a5e57f8aa"
 
@@ -87,6 +88,7 @@ export default function Page() {
             
     //   let attestation = await eas.getAttestation("0x5e81964bd7d08efab6f219f923eaebdf8a554ccfc2ad056ffd1d858230f3f510");
       console.log("Response: ", response.data.data.attestations)
+      toast("Retrived Successfully", {type: 'success'})
       return response.data.data.attestations;
     
 }
@@ -191,8 +193,10 @@ async function getConfirmationAttestationsForUIDs(uids) {
 
             let res = await tx.wait();
             console.log(res)
+            toast(res, {type: 'success'})
           } catch (e) {
             console.log(e)
+            toast(e.message, {type: 'error'})
         }
 }
 
@@ -203,16 +207,16 @@ async function getConfirmationAttestationsForUIDs(uids) {
             Verify with (Next.Id)
             </h2> */}
 {/* 
-      <button className="btn btn-primary mt-8" onClick={() => {
+      <button className="btn bg-green-500 mt-8" onClick={() => {
         setOption('ma')}}>Verify Attestation</button> <br></br> */}
 
         {/* {option === 'ma' && <> 
           <label htmlFor="Search Id" className="block mt-8 text-sm font-medium dark:text-white">Search Attestations</label>
         <input type="text" id="search" value={search} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter github handler" required onChange={(e) => setSearch(e.target.value)} />
-        <button className="btn btn-primary mt-8" type="button" onClick={getAttestationsForAddress}>Search Attestation</button>
+        <button className="btn bg-green-500 mt-8" type="button" onClick={getAttestationsForAddress}>Search Attestation</button>
           </>
           } */}
-      <table style={{ border: "1px solid"}}>
+      <table className="table">
         <tr>
             <td>Attester</td>
             <td>Deadline</td>
@@ -224,7 +228,7 @@ async function getConfirmationAttestationsForUIDs(uids) {
             <td style={{ border: "1px solid"}}>{ele.attester}</td>
             <td style={{ border: "1px solid"}}>{Date(ele.time).toString()}</td>
             <td style={{ border: "1px solid"}}>{ele.recipient}</td>
-            <td style={{ border: "1px solid"}}><button className="btn btn-primary" onClick={() => validate(ele.id)}>Validate</button></td>
+            <td style={{ border: "1px solid"}}><button className="btn bg-green-500" onClick={() => validate(ele.id)}>Validate</button></td>
         </tr>
       }) : <tr><td></td><td>No Data</td><td></td></tr>}
      </table>

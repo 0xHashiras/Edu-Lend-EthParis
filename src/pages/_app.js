@@ -5,7 +5,9 @@ import { themeChange } from 'theme-change'
 import { store } from '../app/store'
 import { Provider } from 'react-redux'
 import { SessionProvider } from "next-auth/react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import stripe from '@stripe/stripe-js'
 export default function App({ Component, pageProps }) {
   
   useEffect(() => {
@@ -17,6 +19,7 @@ export default function App({ Component, pageProps }) {
     <SessionProvider>
     <Provider store={store}>
       <Layout>
+          <ToastContainer />
           <Component {...pageProps} />
       </Layout>
       </Provider>

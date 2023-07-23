@@ -43,11 +43,11 @@ export default function Page() {
                 <div>
                 <h1 className="text-5xl font-bold">Auth With World Coin</h1>
                 <p className="py-6">Worldcoin is an open-source protocol, supported by a global community of developers, individuals, economists and technologists committed to expanding participation in, and access to, the global economy. The Worldcoin Foundation is the steward, and will support and grow the Worldcoin community until it becomes self-sufficient. Tools for Humanity helped launch Worldcoin, and currently serve as advisors to the Foundation and operators of the World App. Currently in beta, Worldcoin expects to launch in the first half of 2023.</p>
-                {/* <button className="btn btn-primary"></button>
+                {/* <button className="btn bg-green-500"></button>
                 OR */}
                 <a
                 href={`/api/auth/signin`}
-                className="btn btn-primary"
+                className="btn bg-green-500"
                 onClick={(e) => {
                   e.preventDefault()
                   signIn("worldcoin") // when worldcoin is the only provider
@@ -59,11 +59,17 @@ export default function Page() {
               <div className="mt-8">
               {/* <InnerPageContainer title="Verify With Twitter or Github (Next.ID)"> */}
                 <h1>Verify With Twitter or Github (Next.ID)</h1>
-              <Link href='/verify'>
-                 <button className="btn btn-primary">
-                     Next.ID
-                 </button>
+              <Link href='/menu'>
+                 <button className="btn bg-green-500">
+                     Menu
+                 </button> <br />
                  </Link>
+                 <Link href={'organization-verify'}>
+        <button className="btn bg-green-500 mt-8" >Organization Verify Attestation</button>
+        </Link> <br />
+        <Link href={'organization-complete'}>
+        <button className="btn bg-green-500 mt-8" >Organization Complete Attestation</button>
+        </Link>
                  {/* </InnerPageContainer> */}
                  </div>
                 </div>
